@@ -6,9 +6,15 @@ const scrape = async () => {
   });
   const page = await browser.newPage();
   await page.goto("https://etherscan.io/gastracker");
+
+  console.log("should've gone to url");
+
   await page.waitForNavigation({ waitUntil: "domcontentloaded" });
+  console.log("domcontentloaded");
 
   const data = await page.evaluate(() => {
+    console.log("Evaluating page");
+
     const items = [
       ...document.querySelectorAll('[role="row"].odd, [role="row"].even'),
     ]
