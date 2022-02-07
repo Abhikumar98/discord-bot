@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Discord = require("discord.js"); //import discord.js
+const { scrape } = require("./browser");
 
 const client = new Discord.Client({
   intents: [
@@ -20,7 +21,7 @@ console.log("Bot is online");
 //   }
 // });
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   if (message.author.bot) return false;
 
   console.log(`Message from ${message.author.username}: ${message.content}`);
@@ -28,8 +29,19 @@ client.on("messageCreate", (message) => {
   if (message.content === "ping") {
     message.reply("Pong!");
   }
-  if (message.content === "!guzzlers") {
-    message.reply("I'll send details later!");
+  if (message.content === "!g") {
+    message.channel.send("Hold up fetching data...");
+    const response = await scrape();
+    let embed = new Discord.MessageEmbed();
+    embed.setTitle("Gas Guzzlers ⛽️");
+    embed.setDescription("Top 10 Gas guzzlers");
+    response.forEach((msg, index) =>
+      embed.addField(
+        `${index + 1}. ${msg.name}`,
+        `[Checkout on etherscan](${msg.link})`
+      )
+    );
+    message.channel.send({ embeds: [embed] });
   }
 });
 
