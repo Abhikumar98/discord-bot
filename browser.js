@@ -6,6 +6,7 @@ const scrape = async () => {
   });
   const page = await browser.newPage();
   await page.goto("https://etherscan.io/gastracker");
+  await page.waitForNavigation({ waitUntil: "domcontentloaded" });
 
   const data = await page.evaluate(() => {
     const items = [
@@ -16,6 +17,8 @@ const scrape = async () => {
         link: td.querySelector("a").href,
       }))
       .slice(0, 10);
+
+    console.log({ items });
 
     return items;
   });
