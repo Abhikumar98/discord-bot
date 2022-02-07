@@ -1,7 +1,10 @@
 const puppeteer = require("puppeteer");
 
 const scrape = async () => {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({
+    headless: false,
+    executablePath: "/usr/bin/chromium-browser",
+  });
   const page = await browser.newPage();
   await page.goto("https://etherscan.io/gastracker");
 
