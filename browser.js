@@ -3,15 +3,18 @@ const puppeteer = require("puppeteer");
 const scrape = async () => {
   const browser = await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: false,
   });
   const page = await browser.newPage();
-  await page.goto("https://etherscan.io/gastracker");
+  await page.goto("https://etherscan.io/gastracker", {
+    waitUntil: "networkidle0",
+  });
 
   console.log("should've gone to url");
 
-  await page.waitForNavigation({ waitUntil: "domcontentloaded" });
+  // await page.waitForNavigation({ waitUntil: "domcontentloaded" });
   console.log("domcontentloaded");
-
+  // await page.waitUntil(500);
   const data = await page.evaluate(() => {
     console.log("Evaluating page");
 
@@ -29,7 +32,7 @@ const scrape = async () => {
     return items;
   });
 
-  await browser.close();
+  // await browser.close();
   console.log({ data });
 
   return data;
