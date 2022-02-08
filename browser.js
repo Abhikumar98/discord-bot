@@ -10,7 +10,7 @@ const scrape = async () => {
   });
   const page = await browser.newPage();
   await page.goto("https://etherscan.io/gastracker", {
-    waitUntil: "networkidle2",
+    waitUntil: "networkidle0",
   });
 
   console.log("should've gone to url");
