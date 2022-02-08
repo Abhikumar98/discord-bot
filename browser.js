@@ -8,7 +8,6 @@ const scrape = async () => {
       "--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "--window-size=1200,800",
     ],
-    headless: true,
   });
   const page = await browser.newPage();
   await page.goto("https://etherscan.io/gastracker", {
@@ -28,8 +27,6 @@ const scrape = async () => {
 
   const data = await page.evaluate(() => {
     console.log("Evaluating page");
-
-    console.log(document.getElementsByTagName("body").innerHTML);
 
     const items = [
       ...document.querySelectorAll('[role="row"].odd, [role="row"].even'),
