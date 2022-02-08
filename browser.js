@@ -36,7 +36,7 @@ const scrape = async () => {
     return items;
   });
 
-  // await browser.close();
+  await browser.close();
   console.log({ data });
 
   return data;
