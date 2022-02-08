@@ -6,24 +6,14 @@ const scrape = async () => {
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-      "--window-size=1200,800",
     ],
   });
   const page = await browser.newPage();
   await page.goto("https://etherscan.io/gastracker", {
-    waitUntil: "networkidle0",
+    waitUntil: "networkidle2",
   });
 
   console.log("should've gone to url");
-
-  // await page.waitForNavigation({ waitUntil: "domcontentloaded" });
-  console.log("domcontentloaded");
-
-  // await page.waitUntil(500);
-  // await page.waitForSelector('[role="row"]');
-  // const searchResults = await page.$$eval(`role=["row"]`, (results) => {
-  //   console.log({ results });
-  // });
 
   const data = await page.evaluate(() => {
     console.log("Evaluating page");
