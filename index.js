@@ -42,13 +42,13 @@ client.on("messageCreate", async (message) => {
     let embed = new Discord.MessageEmbed();
     embed.setTitle("WorthInNFt");
     embed.setDescription("Your NFT portfolio");
-    embed.setColor(!profitLoss ? "#ef4444" : "#059669");
+    embed.setColor(!Number(profitLoss) ? "#ef4444" : "#059669");
     embed.setURL(`https://worthinnft.com/${checkForAddress[1]}`);
 		embed.addField(
 			`Total Worth`,
 			`${totalWorth} ETH`,
 		)
-		embed.addField(`Profit / Loss`, ` ${!profitLoss ? "-" : "+"} ${profitLoss}%`);
+		embed.addField(`Profit / Loss`, `${profitLoss}%`);
     message.channel.send({ embeds: [embed] });
     // message.channel.send({ embeds: [embed] });
   }

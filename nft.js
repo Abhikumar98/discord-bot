@@ -273,12 +273,16 @@ const fetchNFTs = async (currAddress) => {
 	// const { data } = response;
 	// const { result } = data;
 
+	console.log("fetching things from etherscan");
+
   const transactionsResponse = await getEtherscanTransactions(address);
 
+  
   let transactions = transactionsResponse.result.filter(
-		(tx) => tx.to.toLowerCase() === address.toLowerCase()
-  );
-
+	  (tx) => tx.to.toLowerCase() === address.toLowerCase()
+	  );
+	  
+	  console.log("fetching things from opensea");
   const response = await getOpenseaPage(address);
   
   // return { profitLoss: "", totalWorth: "" };
