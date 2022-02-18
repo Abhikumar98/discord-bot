@@ -263,7 +263,7 @@ const validateAndResolveAddress = async (userAddress) => {
 };
 
 const fetchNFTs = async (currAddress) => {
-	const { address } = await validateAndResolveAddress(currAddress);
+	const { address, avatar } = await validateAndResolveAddress(currAddress);
 
 	console.log({ address });
 
@@ -289,7 +289,7 @@ const fetchNFTs = async (currAddress) => {
 
 	const { profitLoss, totalWorth } = await calculateProfits(response, transactions);
 
-	return { profitLoss, totalWorth };
+	return { profitLoss, totalWorth, avatar };
 };
 
 module.exports = {

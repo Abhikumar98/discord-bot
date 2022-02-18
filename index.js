@@ -37,19 +37,54 @@ client.on("messageCreate", async (message) => {
   console.log({ checkForAddress, checkNFTCommand });
 
   if (checkNFTCommand && checkForAddress.length === 2) {
-    message.reply("Hold up sending collections of nfts...");
-    const { totalWorth, profitLoss } = await fetchNFTs(checkForAddress[1]);
+    message.reply("Hold tight, loading your bag 👀");
+    const { totalWorth, profitLoss, avatar } = await fetchNFTs(checkForAddress[1]);
+
+    const link = `https://worthinnft.com/${checkForAddress[1]}`;
+     const components = [
+			{
+				type: 1,
+				components: [
+					{
+						style: 5,
+						label: `Checkout complete portfolio`,
+						url: link,
+						disabled: false,
+						emoji: {
+							id: null,
+							name: `🔗`,
+						},
+						type: 2,
+					},
+				],
+			},
+		];
     let embed = new Discord.MessageEmbed();
     embed.setTitle("WorthInNFt");
-    embed.setDescription("Your NFT portfolio");
+    embed.setDescription("Summary of your (N)FA so far");
+    embed.setAuthor(
+		checkForAddress[1],
+		avatar,
+		link
+    );
+    embed.setThumbnail(avatar ?? `https://www.worthinnft.com/favicon.png`);
     embed.setColor(Number(profitLoss) < 0 ? "#ef4444" : "#059669");
-    embed.setURL(`https://worthinnft.com/${checkForAddress[1]}`);
-		embed.addField(
-			`Total Worth`,
-			`${totalWorth.toFixed(4)} ETH`,
-		)
-		embed.addField(`Profit / Loss`, `${profitLoss}%`);
-    message.channel.send({ embeds: [embed] });
+    embed.setURL(link);
+		embed.addFields([
+			{
+				name: `Total Worth`,
+				value: `${totalWorth.toFixed(4)} ETH`,
+				inline: true,
+			},
+			{
+				name: "\u200B",
+				inline: true,
+				value: "\u200B",
+			},
+			{ name: `Profit / Loss`, value: `${profitLoss}%`, inline: true },
+		]);
+    embed.setFooter(`By WorthInNFt`, `https://www.worthinnft.com/favicon.png`);
+    message.channel.send({ embeds: [embed], components: components });
     // message.channel.send({ embeds: [embed] });
   }
 
@@ -67,18 +102,55 @@ client.on("messageCreate", async (message) => {
       );
       message.channel.send({ embeds: [embed] });
     }
-    if (message.content === "!gas") {
-      message.channel.send("Hold up fetching data...");
-      let embed = new Discord.MessageEmbed();
-      embed.setTitle("Gas Guzzlers ⛽️");
-      embed.setAuthor("#059669");
-      embed.setDescription("Top 10 Gas guzzlers");
-      embed.addField(
-        `some `,
-        `asdf`
-      )
-      message.channel.send({ embeds: [embed] });
-  }
+  if (message.content === "!test") {
+    
+    const components = [
+		{
+			type: 1,
+			components: [
+				{
+					style: 5,
+					label: `Checkout complete portfolio`,
+					url: `https://www.worthinnft.com/favicon`,
+					disabled: false,
+					emoji: {
+						id: null,
+						name: `🔗`,
+					},
+					type: 2,
+				},
+			],
+		},
+	];
+
+     let embed = new Discord.MessageEmbed();
+      embed.setTitle("WorthInNFt");
+      embed.setDescription("Summary of your (N)FA so far");
+      embed.setAuthor(
+			"abhishekkumar.eth",
+			"",
+			`https://worthinnft.com/abhishekkumar.eth`
+		);
+      embed.setThumbnail(
+			`https://vibeheads.mypinata.cloud/ipfs/QmbiQo7ZwGSPqRUrsWr1kxBKMLfWWBdv5euFJL3ibqETkL/101.gif`
+		);
+      embed.setColor(Number(10) < 0 ? "#ef4444" : "#059669");
+    embed.setURL(`https://worthinnft.com/abhishekkumar.eth`);
+    embed.addFields([
+		{
+			name: `Total Worth`,
+			inline: true,
+			value: `${(1234).toFixed(4)} ETH`,
+		},
+		{
+			name: "\u200B",
+			inline: true,
+			value: "\u200B",
+		},
+		{ name: `Profit / Loss`, inline: true, value: `${123}%` },
+	]);
+      message.channel.send({ embeds: [embed], components });
+    }
 });
 
 //make sure this line is the last line
