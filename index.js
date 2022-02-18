@@ -46,7 +46,7 @@ client.on("messageCreate", async (message) => {
     embed.setURL(`https://worthinnft.com/${checkForAddress[1]}`);
 		embed.addField(
 			`Total Worth`,
-			`${totalWorth} ETH`,
+			`${totalWorth.toFixed(4)} ETH`,
 		)
 		embed.addField(`Profit / Loss`, `${profitLoss}%`);
     message.channel.send({ embeds: [embed] });
